@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\StudentController;
 
+use function Pest\Laravel\post;
 
 Route::get('/user', function (Request $request) {
         return $request->user();
@@ -22,3 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
         [ClassController::class, 'assignStudent']
     );
 });
+
+
+
+// Route::post('/student/create', [AuthController::class, 'login']);

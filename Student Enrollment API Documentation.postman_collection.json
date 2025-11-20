@@ -1,0 +1,301 @@
+{
+	"info": {
+		"_postman_id": "771685eb-ebf2-4cce-85e7-6d5a06b56a5a",
+		"name": "Student Enrollment API Documentation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "50237977",
+		"_collection_link": "https://rawaau124-7617029.postman.co/workspace/Aly-Rawaau's-Workspace~8e67e739-a310-44b0-81c2-8df4e571fac0/collection/50237977-771685eb-ebf2-4cce-85e7-6d5a06b56a5a?action=share&source=collection_link&creator=50237977"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"admin@example.com\",\r\n  \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://studentenrollmentapi.test/api/admin/login",
+					"protocol": "http",
+					"host": [
+						"studentenrollmentapi",
+						"test"
+					],
+					"path": [
+						"api",
+						"admin",
+						"login"
+					]
+				},
+				"description": "Logs in the admin and returns a Sanctum token.\n\nStartFragment\n\n### Notes\n\n- This is the only **public** endpoint.\n    \n- The returned token must be used as a **Bearer Token** for all other API requests.\n    \n\nEndFragment"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 6|JRdkL8Tn8RkwlVNVgFsO9CobpYIo3fUIwkwTsVZQb1c49509",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Chamee\",\r\n  \"email\": \"chamee@example.com\",\r\n  \"birthdate\": \"2010-01-01\",\r\n  \"grade\": \"5A\"\r\n}"
+				},
+				"url": {
+					"raw": "http://studentenrollmentapi.test/api/students",
+					"protocol": "http",
+					"host": [
+						"studentenrollmentapi",
+						"test"
+					],
+					"path": [
+						"api",
+						"students"
+					]
+				},
+				"description": "Create a new student with the provided information.\n\nStartFragment\n\n### Validation Rules\n\n- `name` — required, string\n    \n- `email` — required, unique\n    \n- `birthdate` — required, valid date\n    \n- `grade` — required\n    \n\n### Notes\n\n- Returns status **201 (Created)** on success.\n    \n- Returns **422** if validation fails.\n    \n\nEndFragment"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 6|JRdkL8Tn8RkwlVNVgFsO9CobpYIo3fUIwkwTsVZQb1c49509",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"John Doe\",\r\n  \"email\": \"john@example.com\",\r\n  \"birthdate\": \"2010-01-01\",\r\n  \"grade\": \"5A\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://studentenrollmentapi.test/api/students",
+					"protocol": "http",
+					"host": [
+						"studentenrollmentapi",
+						"test"
+					],
+					"path": [
+						"api",
+						"students"
+					]
+				},
+				"description": "Retrieve a list of all registered students.\n\n### Features\n\n- Includes eager-loaded class assignments (`classes` relationship).\n    \n- Only accessible to authenticated admins.\n    \n\n### Returns\n\n- Array of student objects with their assigned classes."
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 6|JRdkL8Tn8RkwlVNVgFsO9CobpYIo3fUIwkwTsVZQb1c49509",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"English\",\r\n  \"section\": \"B\",\r\n  \"max_students\": 20\r\n}"
+				},
+				"url": {
+					"raw": "http://studentenrollmentapi.test/api/classes",
+					"protocol": "http",
+					"host": [
+						"studentenrollmentapi",
+						"test"
+					],
+					"path": [
+						"api",
+						"classes"
+					]
+				},
+				"description": "Create a new class.\n\n### Notes\n\n- `max_students` controls how many students can be assigned.\n    \n- Returns **201** on creation."
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 6|JRdkL8Tn8RkwlVNVgFsO9CobpYIo3fUIwkwTsVZQb1c49509",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Math\",\r\n  \"section\": \"A\",\r\n  \"max_students\": 25\r\n}"
+				},
+				"url": {
+					"raw": "http://studentenrollmentapi.test/api/classes",
+					"protocol": "http",
+					"host": [
+						"studentenrollmentapi",
+						"test"
+					],
+					"path": [
+						"api",
+						"classes"
+					]
+				},
+				"description": "Fetch a list of all classes.\n\n### Features\n\n- Includes eager-loaded students assigned to each class.\n    \n- Admin authentication required.\n    \n\n### Returns\n\n- Array of classes with student lists."
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 6|JRdkL8Tn8RkwlVNVgFsO9CobpYIo3fUIwkwTsVZQb1c49509",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://studentenrollmentapi.test/api/classes/1/assign/2",
+					"protocol": "http",
+					"host": [
+						"studentenrollmentapi",
+						"test"
+					],
+					"path": [
+						"api",
+						"classes",
+						"1",
+						"assign",
+						"2"
+					]
+				},
+				"description": "### Description\n\nAssign a student to a class.\n\n### Path Parameters\n\n- `class` — ID of the class\n    \n- `student` — ID of the student\n    \n\n### Notes\n\n- Prevents over-enrollment using `max_students`.\n    \n- Prevents duplicate assignments.\n    \n- Requires admin authentication."
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 6|JRdkL8Tn8RkwlVNVgFsO9CobpYIo3fUIwkwTsVZQb1c49509",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Math\",\r\n  \"section\": \"A\",\r\n  \"max_students\": 25\r\n}"
+				},
+				"url": {
+					"raw": "http://studentenrollmentapi.test/api/user",
+					"protocol": "http",
+					"host": [
+						"studentenrollmentapi",
+						"test"
+					],
+					"path": [
+						"api",
+						"user"
+					]
+				},
+				"description": "Return the authenticated admin’s details based on their Bearer token.\n\n### Notes\n\n- Useful for testing authentication.\n    \n- Requires a valid Sanctum token."
+			},
+			"response": []
+		}
+	]
+}

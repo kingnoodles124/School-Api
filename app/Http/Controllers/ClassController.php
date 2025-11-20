@@ -19,7 +19,7 @@ class ClassController extends Controller
         return SchoolClass::with('students')->get();
     }
 
-    public function assignStudent(Student $student, SchoolClass $class)
+    public function assignStudent(SchoolClass $class, Student $student)
     {
         if ($class->students()->count() >= $class->max_students) {
             return response()->json([
