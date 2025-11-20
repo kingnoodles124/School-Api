@@ -1,59 +1,237 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Student Enrollment API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modular RESTful API built with Laravel, featuring student registration, class management, class assignment, admin authentication (via Sanctum), validation, testing, and proper error handling.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Admin authentication using Laravel Sanctum
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Student CRUD operations
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Class CRUD operations
 
-## Learning Laravel
+Many-to-many student ↔ class assignment
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+Over-enrollment protection using max_students
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Eager loading to prevent N+1 issues
 
-## Laravel Sponsors
+Validation using Form Request classes
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Feature & Unit tests (Laravel Testing)
 
-### Premium Partners
+Clean RESTful architecture
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+API documentation via Postman Collection
 
-## Contributing
+## Tech Stack
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Laravel 11.x
 
-## Code of Conduct
+PHP 8.2+ (via Laravel Herd)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Sanctum (token-based API auth)
 
-## Security Vulnerabilities
+MySQL / SQLite
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Postman for API documentation
 
-## License
+PHPUnit for testing
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Installation & Local Setup
+
+Follow these steps to run the API locally.
+
+## Clone the Repository
+git clone <your-repository-url>
+cd <project-folder>
+
+## Install Composer Dependencies
+herd php composer install
+
+## Copy Environment File
+cp .env.example .env
+
+## Update .env configuration
+
+Minimum required fields:
+
+APP_NAME=StudentEnrollmentAPI
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://studentenrollmentapi.test
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=student_enrollment
+DB_USERNAME=root
+DB_PASSWORD=
+
+SANCTUM_STATEFUL_DOMAINS=studentenrollmentapi.test
+SESSION_DOMAIN=studentenrollmentapi.test
+
+
+If using SQLite, modify DB settings accordingly.
+
+## Generate App Key
+herd php artisan key:generate
+
+## Run Migrations & Seeders
+
+This will create tables & insert the default admin user.
+
+herd php artisan migrate --seed
+
+
+Default admin credentials:
+
+email: admin@example.com  
+password: password
+
+## Run Development Server
+
+If using Laravel Herd, simply add the project and visit:
+
+http://studentenrollmentapi.test
+
+
+API routes are under:
+
+http://studentenrollmentapi.test/api
+
+🔐 Authentication (Laravel Sanctum)
+
+Login using:
+
+POST /api/admin/login
+{
+  "email": "admin@example.com",
+  "password": "password"
+}
+
+
+You will receive:
+
+{
+  "token": "your_sanctum_token_here"
+}
+
+
+Use this token for protected routes:
+
+Authorization: Bearer <token>
+
+## API Endpoints
+## Authentication
+POST /api/admin/login
+
+Returns Sanctum token for admin.
+
+## Students
+GET /api/students
+
+List all students (eager-loaded classes).
+
+POST /api/students
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "birthdate": "2010-01-01",
+  "grade": "5A"
+}
+
+GET /api/students/{id}
+
+View single student.
+
+PUT /api/students/{id}
+
+Update student.
+
+DELETE /api/students/{id}
+
+Delete student.
+
+🏫 Classes
+GET /api/classes
+
+List all classes (with students).
+
+POST /api/classes
+{
+  "name": "Math",
+  "section": "A",
+  "max_students": 30
+}
+
+## Class Assignment
+POST /api/classes/{class}/assign/{student}
+
+Assign a student to a class.
+
+Responses:
+
+200 → Student assigned successfully.
+
+400 → Class is full.
+
+409 → Student already assigned.
+
+## Testing
+
+Run all tests:
+
+herd php artisan test
+
+
+Includes:
+
+## Feature Test:
+
+Student creation
+
+Class assignment
+
+## Unit Test:
+
+Class over-enrollment logic
+
+## API Documentation
+
+A Postman Collection is included:
+
+student-enrollment-api.postman_collection.json
+
+Import into Postman to see full documentation and example requests.
+
+## Project Structure (Important Files)
+app/
+ ├─ Models/
+ │   ├─ Admin.php
+ │   ├─ Student.php
+ │   └─ SchoolClass.php
+ ├─ Http/
+ │   ├─ Controllers/
+ │   │   ├─ AuthController.php
+ │   │   ├─ StudentController.php
+ │   │   └─ ClassController.php
+ │   ├─ Requests/
+ │   │   ├─ StoreStudentRequest.php
+ │   │   └─ StoreClassRequest.php
+
+database/
+ ├─ seeders/
+ │   └─ AdminSeeder.php
+ ├─ migrations/
+ └─ factories/
+     ├─ AdminFactory.php
+     ├─ StudentFactory.php
+     └─ SchoolClassFactory.php
+
+tests/
+ ├─ Feature/
+ │   ├─ StudentTest.php
+ │   └─ ClassAssignmentTest.php
+ └─ Unit/
+     └─ ClassOverEnrollmentTest.php
